@@ -1,0 +1,92 @@
+body {
+    background: #fafafa;
+    color: #333333;
+    margin-top: 5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+}
+
+.bg-steel {
+    background-color: #5f788a;
+}
+
+.site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+}
+
+.content-section {
+    background: #ffffff;
+    padding: 10px 15px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+.content-section.xrd-data-list {
+    min-height: 35px;
+    max-height: 300px;
+    overflow: auto;
+}
+
+#scattergraph {
+    margin: 0 auto;
+    height: 500px;
+    /* min-height: 300px; */
+}
+
+.form-group {
+    margin-bottom: 0px;
+}
+
+/* #dropzone {
+	background-color: #f0f0f0;
+	border: dashed 2px #a4a4a4;
+	color: #515151;
+	min-height: 25px;
+	padding: 20px;
+    text-shadow: 1px 1px 0 #fff;
+    border-radius: 3px;
+    text-align: center;
+} */
+
+#dropzone.dropover {
+	background-color: #f0f0f0;
+	color: rgb(206, 206, 206);
+}
+
+
+ul#file-upload-log {
+    padding-left: 20px;
+}
+
+#error-note.content-section{
+    max-height: 300px;
+    overflow: auto;
+}
+
+.form-check-label {
+    word-break: break-all;
+}
+
+form.btn-under-data-list {
+    margin-bottom: 5px;
+}
+
+.btns-under-data-list {
+    margin-bottom: 20px;
+}
+
+.minicolors-theme-myTheme .minicolors-swatch {
+    width: 20px;
+    height: 3px;
+    display: inline-block;
+}

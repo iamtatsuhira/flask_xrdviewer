@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+  <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h4>XRD Data List</h4>
+        <div class="content-section xrd-data-list">
+          <form id="formName" action="/set_data" class="form-group">
+            {% for xrd_dict in xrd_dicts %}
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="xrdlistcheck"
+                value="{{ xrd_dict.id }}" id="chkbox-{{ xrd_dict.id }}" checked="checked" onChange="{setVisibleOrNot( 'form-check-input' )}" >
+                <div id="legend-line-{{ xrd_dict.id }}">
+                </div>
+                <label class="form-check-label" for="chkbox-{{ xrd_dict.id }}" id="legend-label-{{ xrd_dict.id }}">{{ xrd_dict.name }}</label>
+              </div>
+            {% endfor %}
+          </form>
+        </div>
+        <div class="btns-under-data-list">
+          <form class="btn-under-data-list">
+            <button type="button" class="btn btn-primary btn-block btn-sm" onclick="check_all()">Check All</button>
+          </form>
+          <form class="btn-under-data-list">
+            <button type="button" class="btn btn-primary btn-block btn-sm" onclick="uncheck_all()">Uncheck All</button>
+          </form>
+          <form action='{{url_for("releasedata")}}' method="POST" class="btn-under-data-list">
+            <button name="release_all" type="submit" class="btn btn-primary btn-block btn-sm" value="Release All">Release All</button>
+          </form>
+        </div>
+        <h4>Error Note</h4>
+        <div class="content-section" id="error-note">
+          <ul id="file-upload-log">
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col-md-8">
+        <!-- <div id="dropzone" effectAllowed="move" type="file">
+          Drag and Drop *.txt/dat files here !
+        </div> -->
+        <h4 class="text-danger">
+          Drag and drop *.txt/dat files to the graph area blow!
+        </h4>
+        <div class="content-section" id="dropzone">
+            <div class="chart" id="scattergraph">
+              <script>
+                var plot_data_js = {{ plot_data|safe }}
+                plotGraph(plot_data_js)
+              </script>
+            </div>
+        </div>
+        <script>setLegend()</script>
+      </div>
+    </div>
+  </main>
+{% endblock content %}
