@@ -6,8 +6,7 @@
 
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-	<link rel="stylesheet" type="text/css" href="/static/pickr-widget/dist/pickr.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/main.css">
 	<script src="/static/plotly/plotly-latest.min.js"></script>
 	<script src="/static/jquery/jquery-3.3.1.min.js"></script>
 	<script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -32,10 +31,6 @@
 	<div>
 		{% block content %}{% endblock %}
 	</div>
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS (bootstrap.bundle.min.js includes Popper.js)-->
 	<script src="/static/myJS/draganddrop.js"></script>
-	<script src="/static/pickr-widget/dist/pickr.min.js"></script>
-	<script src="/static/myJS/color-picker.js"></script>
 </body>
 </html>
