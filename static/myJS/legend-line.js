@@ -1,31 +1,33 @@
-function setLegend(){
-    var graphDiv = document.getElementById('scattergraph')
-    var data = graphDiv.data
-    for (var i=0; i<data.length; i++){
-        var lineId = "legend-line-" + (i+1)
-        var labelId = "legend-label-" + (i+1)
-        var legendLine = document.getElementById(lineId)
-        var legendLabel = document.getElementById(labelId)
+const setLegend = () => {
+    const graphDiv = document.getElementById('scattergraph')
+    const data = graphDiv.data
+    let i = 0
+    for (let index in data){
+        let lineId = "legend-line-" + (i+1)
+        let labelId = "legend-label-" + (i+1)
+        let legendLine = document.getElementById(lineId)
+        let legendLabel = document.getElementById(labelId)
         legendLine.style.width = '20px'
         legendLine.style.height = '3px'
-        legendLine.style.backgroundColor = data[i].line.color
+        legendLine.style.backgroundColor = data[index].line.color
         legendLine.style.display = 'inline-block'
         legendLine.style.margin = '0px 4px 3px 3px'
-        legendLabel.innerHTML = data[i].name
+        legendLabel.innerHTML = data[index].name
+        i += 1
     }
 }
 
-function addLegend(elNum) {
-    var graphDiv = document.getElementById('scattergraph')
-    var data = graphDiv.data
-    var startIndex = data.length - elNum
+const addLegend = (elNum) => {
+    const graphDiv = document.getElementById('scattergraph')
+    const data = graphDiv.data
+    const startIndex = data.length - elNum
 
-    var parentElment = document.getElementById('formName')
+    const parentElment = document.getElementById('formName')
     
-    for (var index=startIndex; index<data.length; index++){
-        var newDiv = document.createElement('div')
+    for (let index=startIndex; index<data.length; index++){
+        let newDiv = document.createElement('div')
         newDiv.classList.add('form-check')
-        var newCheckBox = document.createElement('input')
+        let newCheckBox = document.createElement('input')
         newCheckBox.classList.add('form-check-input')
         newCheckBox.setAttribute('type', 'checkbox')
         newCheckBox.setAttribute('name', 'xrdlistcheck')
@@ -33,9 +35,9 @@ function addLegend(elNum) {
         newCheckBox.setAttribute('id', 'chkbox-'+(index+1))
         newCheckBox.setAttribute('checked', 'checked')
         newCheckBox.setAttribute('onChenge', "{setVisibleOrNot( 'form-check-input' )}")
-        var newLegendLine = document.createElement('div')
+        let newLegendLine = document.createElement('div')
         newLegendLine.setAttribute('id', 'legend-line-' + (index+1))
-        var newLegendLabel = document.createElement('label')
+        let newLegendLabel = document.createElement('label')
         newLegendLabel.classList.add('form-check-label')
         newLegendLabel.setAttribute('for', 'chkbox-'+(index+1))
         newLegendLabel.setAttribute('id', 'legend-label-'+(index+1))

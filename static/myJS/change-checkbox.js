@@ -1,15 +1,11 @@
-function submit(idName){
-    document.getElementById(idName).submit()
-}
-
-function setVisibleOrNot(checkBoxClassName){
-    elements = document.getElementsByClassName(checkBoxClassName)
-    visibleArray = []
-    for (var i =0;i<elements.length; i++){
-        visibleArray.push(elements[i].checked)
+setVisibleOrNot = (checkBoxClassName) =>{
+    const elements = document.getElementsByClassName(checkBoxClassName)
+    const visibleArray = []
+    for (let el of elements){
+        visibleArray.push(el.checked)
     }
 
-    var update = {
+    const update = {
         'visible': visibleArray
     }
 

@@ -1,15 +1,15 @@
-function check_all(){
-    var checkList = document.getElementsByClassName('form-check-input')
-    for (var i=0;i<checkList.length; i++){
-        checkList[i].checked = true
+const checkAll = () => {
+    const checkList = document.getElementsByClassName('form-check-input')
+    for (const elCheck of checkList){
+        elCheck.checked = true
         setVisibleOrNot( 'form-check-input' )
     }
 }
 
-function uncheck_all(){
-    var checkList = document.getElementsByClassName('form-check-input')
-    for (var i=0;i<checkList.length; i++){
-        checkList[i].checked = false
+const uncheckAll = () => {
+    const checkList = document.getElementsByClassName('form-check-input')
+    for (const elCheck of checkList){
+        elCheck.checked = false
         setVisibleOrNot( 'form-check-input' )
     }
 }
