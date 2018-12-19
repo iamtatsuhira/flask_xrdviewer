@@ -6,12 +6,12 @@ import json
 import os
 import pandas as pd
 import datetime
+import io
 
 from xrddata import XRDData
 
 
 ALLOWED_EXTENSIONS = set(['txt', 'dat'])
-UPLOAD_DIRECTORY = 'static/uploads'
 
 app = Flask(__name__)
 
@@ -67,7 +67,6 @@ def add_data():
     # make json for plotly
     response = xrd_data.json_plotly_last(add_num)
     response = jsonify(response) # jsonifyによりflask.wrappers.Responseオブジェクトを作成
-    print(type(response))
 
     return response
 
@@ -82,15 +81,10 @@ def read_data_from(file):
         dict -- filename, x, y, time_postedが入った辞書
     '''
     filename = file.filename
-    filepath = os.path.join(UPLOAD_DIRECTORY, filename)
-    # temporarilly save the file
-    file.save(filepath)
 
     # load data as numpy array
-    data = np.loadtxt(filepath)
-
-    # remove the temporarilly saved file
-    os.remove(filepath)
+    data_temp = io.TextIOWrapper(file.stream._file)
+    data = np.array(data_temp.read().strip().split(), float).reshape(-1, 2)
 
     x = data[:,0]
     y = data[:,1]
