@@ -1,4 +1,4 @@
-const setLegend = () => {
+export const setLegend = () => {
     const graphDiv = document.getElementById('scattergraph')
     const data = graphDiv.data
     let i = 0
@@ -17,7 +17,7 @@ const setLegend = () => {
     }
 }
 
-const addLegend = (elNum) => {
+export const addLegend = (elNum) => {
     const graphDiv = document.getElementById('scattergraph')
     const data = graphDiv.data
     const startIndex = data.length - elNum
@@ -34,7 +34,7 @@ const addLegend = (elNum) => {
         newCheckBox.setAttribute('value', index+1)
         newCheckBox.setAttribute('id', 'chkbox-'+(index+1))
         newCheckBox.setAttribute('checked', 'checked')
-        newCheckBox.setAttribute('onChenge', "{setVisibleOrNot( 'form-check-input' )}")
+        // newCheckBox.setAttribute('onChenge', "{setVisibleOrNot( 'form-check-input' )}")
         let newLegendLine = document.createElement('div')
         newLegendLine.setAttribute('id', 'legend-line-' + (index+1))
         let newLegendLabel = document.createElement('label')

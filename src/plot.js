@@ -1,3 +1,5 @@
+import Plotly from 'plotly.js-dist'
+
 const icon = {
     'grid': {
         'width': 300,
@@ -38,8 +40,8 @@ const customButtons = [
         name: 'show/hide grid',
         icon: icon.grid,
         click: (gd) => {
-            boolShowGrid = !gd.layout.xaxis.showgrid
-            update = {
+            const boolShowGrid = !gd.layout.xaxis.showgrid
+            const update = {
                 'xaxis.showgrid': boolShowGrid,
                 'yaxis.showgrid': boolShowGrid
             }
@@ -50,12 +52,13 @@ const customButtons = [
         name: 'linear/log scale x axis',
         icon: icon.linearLogX,
         click: (gd) => {
+            let newType
             if (gd.layout.xaxis.type === 'log'){
                 newType = 'linear'
             } else {
                 newType = 'log'
             }
-            update = {
+            const update = {
                 'xaxis.type': newType
             }
             Plotly.relayout(gd, update)
@@ -65,12 +68,13 @@ const customButtons = [
         name: 'linear/log scale y axis',
         icon: icon.linearLogY,
         click: (gd) => {
+            let newType
             if (gd.layout.yaxis.type === 'log'){
                 newType = 'linear'
             } else {
                 newType = 'log'
             }
-            update = {
+            const update = {
                 'yaxis.type': newType
             }
             Plotly.relayout(gd, update)
@@ -125,9 +129,9 @@ const customButtons = [
     },
 ]
 
-const plotGraph = (data) => {
-    const graphs = data
-    var layout = {
+const plotGraph = (jsonData) => {
+    const graphs = jsonData
+    const layout = {
         font: {
             family: 'Helvetica Neue',
             size: 16
@@ -182,17 +186,17 @@ const plotGraph = (data) => {
 
 
 const normalizeData = (gd) => {
-    update_y_list = []
+    const update_y_list = []
     for (const datum of gd.data){
         const max_y = datum.customdata[0].max_y
         const normed_y_list = []
         for (const y of datum.y){
-            normed_y = y / max_y
+            const normed_y = y / max_y
             normed_y_list.push(normed_y)
         }
         update_y_list.push(normed_y_list)
     }
-    update_data = {
+    const update_data = {
         'y': update_y_list
     }
 
@@ -200,24 +204,24 @@ const normalizeData = (gd) => {
 }
 
 const normalizeLayout = () => {
-    update_layout = {
+    const update_layout = {
         'c_normalized': true
     }
     return update_layout
 }
 
-const resetNormalizeData = (gd) => {
-    update_y_list = []
+const resetNormalizeData = (gd) =>{
+    const update_y_list = []
     for (const datum of gd.data){
-        var max_y = datum.customdata[0].max_y
-        var normed_y_list = []
+        const max_y = datum.customdata[0].max_y
+        const normed_y_list = []
         for (const y of datum.y){
-            normed_y = y * max_y
+            const normed_y = y * max_y
             normed_y_list.push(normed_y)
         }
         update_y_list.push(normed_y_list)
     }
-    update_data = {
+    const update_data = {
         'y': update_y_list
     }
 
@@ -225,25 +229,25 @@ const resetNormalizeData = (gd) => {
 }
 
 const resetNormalizeLayout = () => {
-    update_layout = {
+    const update_layout = {
         'c_normalized': false
     }
     return update_layout
 }
 
-const offsetAppliedData = (gd, offset) => {
-    update_y_list = []
+const offsetAppliedData = (gd, offset) =>{
+    const update_y_list = []
     let i = 0
     for (const datum of gd.data){
-        var offset_y_list = []
+        const offset_y_list = []
         for (const y of datum.y){
-            offset_y = y + offset * i
+            const offset_y = y + offset * i
             offset_y_list.push(offset_y)
         }
         update_y_list.push(offset_y_list)
         i += 1
     }
-    update_data = {
+    const update_data = {
         'y': update_y_list
     }
 
@@ -251,31 +255,32 @@ const offsetAppliedData = (gd, offset) => {
 }
 
 const offsetAppliedLayout = (offset) => {
-    update_layout = {
+    const update_layout = {
         'c_offset': offset
     }
 
     return update_layout
 }
 
-const offsetRemovedData = (gd) => {
+const offsetRemovedData = (gd) =>{
+    let offset
     if (gd.layout.c_offset){
-        const offset = gd.layout.c_offset
+        offset = gd.layout.c_offset
     } else {
-        const offset = 0.0
-    }    
-    update_y_list = []
+        offset = 0.0
+    }   
+    const update_y_list = []
     let i = 0
     for (const datum of gd.data){
         const offset_y_list = []
-        for (const y of data.y){
-            offset_y = y - offset * i
+        for (const y of datum.y){
+            const offset_y = y - offset * i
             offset_y_list.push(offset_y)
         }
         update_y_list.push(offset_y_list)
         i += 1
     }
-    update_data = {
+    const update_data = {
         'y': update_y_list
     }
 
@@ -283,8 +288,33 @@ const offsetRemovedData = (gd) => {
 }
 
 const offsetRemovedLayout = () => {
-    update_layout = {
+    const update_layout = {
         'c_offset': false
     }
     return update_layout
 }
+
+export default () => {
+    const request = new XMLHttpRequest()
+    request.open('GET', '/get-plot-data', false) // falseで同期通信
+
+    let graphJSON
+    request.onload = () => {
+        if(request.status >=200 && request.status < 400) {
+            // Success!
+            graphJSON = JSON.parse(JSON.parse(request.response))
+            plotGraph(graphJSON)
+        }
+        else {
+            // We reached our target server, but it returned an error
+            console.error('we reached our target server, but it returned an error!')
+        }
+    }
+    request.onerror = () => {
+        // There was a conection error of some sort
+        console.error('There was a conection error of some sort')
+    }
+
+    request.send(null)
+}
+

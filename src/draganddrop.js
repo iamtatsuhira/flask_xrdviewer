@@ -1,3 +1,5 @@
+import Plotly from 'plotly.js-dist'
+import {addLegend} from './legend-line'
 const maxFileSize = 1 * 1024 * 1024
 const elDrop = document.getElementById('dropzone')
 const elNote = document.getElementById('file-upload-log')

@@ -1,4 +1,6 @@
-setVisibleOrNot = (checkBoxClassName) =>{
+import Plotly from 'plotly.js-dist'
+
+export const setVisibleOrNot = (checkBoxClassName) =>{
     const elements = document.getElementsByClassName(checkBoxClassName)
     const visibleArray = []
     for (let el of elements){
