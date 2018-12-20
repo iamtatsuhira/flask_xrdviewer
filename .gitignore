@@ -3,6 +3,6 @@ myenv
 .DS_Store
 .vscode/
 node_modules/
-public/
-!public/templates
-!public/static/icons
+public/static/css/
+public/static/js
+
