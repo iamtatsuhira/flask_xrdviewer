@@ -2,3 +2,7 @@ __pycache__
 myenv
 .DS_Store
 .vscode/
+node_modules/
+public/
+!public/templates
+!public/static/icons

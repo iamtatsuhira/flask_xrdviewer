@@ -13,7 +13,7 @@ from xrddata import XRDData
 
 ALLOWED_EXTENSIONS = set(['txt', 'dat'])
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="public/static", template_folder="public/templates")
 
 xrd_data = XRDData()
 
@@ -103,7 +103,24 @@ def release_data():
     xrd_data.release_all_data()
     return redirect(url_for('home'))
 
+@app.route("/get-plot-data", methods=["GET"])
+def send_plot_data():
+    '''
+    サーバーに保存されているplotのデータ(xrd_data.xrd_dicts)を
+　　 plotlyオブジェクトに変換，さらにはそれをjson形式にダンプしたものを
+    レスポンスとして返す
 
+    Returns:
+        flask.wrappers.Response -- 返すレスポンス
+        　　　　　　　　　　　　　　　　jsonレスポンスには'application/json'というcontent-typeのヘッダーが必要だが，
+        　　　　　　　　　　　　　　　　このflask.wrappers.Responseオブジェクトはjsonにそれをくっつけてくれている
+        　　　　　　　　　　　　　　　　（だから普通にjson.dumpでダンプしただけのjson文字列をresponseにしてもうまくいかない）
+    '''
+    # make json for plotly
+    response = xrd_data.json_plotly()
+    response = jsonify(response) # jsonifyによりflask.wrappers.Responseオブジェクトを作成
+
+    return response
     
 if __name__ == '__main__':
     app.run(debug=True)
