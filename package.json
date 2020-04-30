@@ -15,7 +15,7 @@
   "homepage": "https://github.com/iamtatsuhira/flask_xrdviewer#readme",
   "dependencies": {
     "bootstrap": "^4.1.3",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "plotly.js-dist": "^1.42.5",
     "popper.js": "^1.14.6"
   },
